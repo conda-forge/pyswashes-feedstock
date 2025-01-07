@@ -6,25 +6,27 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 981b0faac462bd881fe531dd5e9bad447d0a7d7473457897d06672c5b313029f
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script: "{{ PYTHON }} -m pip install . -vv"
 
 requirements:
-  build:
-    - python
+  host:
+    - python {{ python_min }}
     - pip
   run:
-    - python
+    - python >={{ python_min }}
     - numpy
     - pandas
     - swashes
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - pyswashes
 
